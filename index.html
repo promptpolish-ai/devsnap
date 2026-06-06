@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevSnap — Premium UI Components</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blk:#0a0a0b; --blk-s:#121214; --blk-m:#1a1a1e;
+  --g9:#1f1f23; --g8:#2a2a2e; --g7:#3a3a40;
+  --g5:#6b6b73; --g4:#8a8a92; --g3:#a8a8b0; --g2:#c8c8cf; --g1:#e8e8ed;
+  --wh:#f5f5f7; --wh-b:#fff;
+  --gd:#d4a853; --gd-l:#e4c07a; --gd-d:#b8913e;
+  --gg:rgba(212,168,83,0.15);
+  --f-dis:'Playfair Display',Georgia,serif;
+  --f-body:'Outfit',-apple-system,sans-serif;
+  --space-xs:.5rem; --space-sm:1rem; --space-md:1.5rem; --space-lg:2.5rem;
+  --space-xl:4rem; --space-2xl:6rem; --space-3xl:8rem;
+  --r-sm:6px; --r-md:12px; --r-lg:20px; --r-xl:32px;
+  --t:.3s cubic-bezier(.4,0,.2,1); --ts:.5s cubic-bezier(.4,0,.2,1);
+  --sh-sm:0 2px 8px rgba(0,0,0,.3); --sh-md:0 8px 32px rgba(0,0,0,.4);
+  --sh-lg:0 16px 48px rgba(0,0,0,.5); --sh-gd:0 4px 20px var(--gg)
+}
+body{font-family:var(--f-body);background:var(--blk);color:var(--g2);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-dis);color:var(--wh);line-height:1.15;font-weight:400}
+a{color:var(--gd);text-decoration:none;transition:color var(--t)}
+a:hover{color:var(--gd-l)}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 var(--space-md)}
+.section{padding:var(--space-2xl) 0}
+.section-label{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gd);margin-bottom:var(--space-sm)}
+.section-title{font-size:clamp(2.5rem,5vw,4rem);margin-bottom:var(--space-sm)}
+.section-sub{font-size:1.125rem;color:var(--g4);max-width:600px;line-height:1.7}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 2rem;border:none;border-radius:var(--r-sm);font-family:var(--f-body);font-size:.9375rem;font-weight:500;cursor:pointer;transition:all var(--t);text-decoration:none}
+.btn-p{background:linear-gradient(135deg,var(--gd),var(--gd-l));color:var(--blk)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:var(--sh-gd);color:var(--blk)}
+.btn-o{background:transparent;border:1px solid var(--g7);color:var(--wh)}
+.btn-o:hover{border-color:var(--gd);color:var(--gd);transform:translateY(-2px)}
+@keyframes fu{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes si{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.afu{animation:fu .8s ease-out forwards;opacity:0}
+.afi{animation:fi .8s ease-out forwards;opacity:0}
+.s1{animation-delay:.1s}.s2{animation-delay:.2s}.s3{animation-delay:.3s}
+.s4{animation-delay:.4s}.s5{animation-delay:.5s}.s6{animation-delay:.6s}
+
+/* ─── NAV ─── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 0;background:rgba(10,10,11,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 var(--space-md)}
+.nav-logo{font-family:var(--f-dis);font-size:1.25rem;color:var(--wh);letter-spacing:-.02em;font-style:italic}
+.nav-logo span{color:var(--gd)}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{font-size:.875rem;color:var(--g3);transition:color var(--t);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gd);transition:width var(--t)}
+.nav-links a:hover{color:var(--wh)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:.5rem 1.25rem;font-size:.8125rem}
+.nav-toggle{display:none;background:none;border:none;color:var(--wh);font-size:1.5rem;cursor:pointer}
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--blk-s);flex-direction:column;padding:1.5rem;gap:1rem;border-bottom:1px solid var(--g9)}
+  .nav-links.open{display:flex}
+  .nav-toggle{display:block}
+}
+
+/* ─── HERO ─── */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:80px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(212,168,83,.06) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 80% 80%,rgba(212,168,83,.04) 0%,transparent 60%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 50% at 50% 50%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 70% 50% at 50% 50%,black 20%,transparent 70%)}
+.hero-content{position:relative;z-index:2;max-width:800px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.375rem 1rem;background:var(--gg);border:1px solid rgba(212,168,83,.2);border-radius:100px;font-size:.75rem;color:var(--gd-l);font-weight:500;margin-bottom:var(--space-lg)}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gd);animation:gp 2s ease-in-out infinite}
+@keyframes gp{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(3rem,7vw,5.5rem);margin-bottom:var(--space-md);letter-spacing:-.03em}
+.hero h1 em{font-style:italic;color:var(--gd)}
+.hero p{font-size:clamp(1.125rem,2vw,1.375rem);color:var(--g4);max-width:600px;margin-bottom:var(--space-lg);line-height:1.7}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.part{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gd);opacity:0}
+.part:nth-child(1){top:20%;left:10%;animation:fi 3s ease-out 1s forwards,float1 8s ease-in-out 3s infinite}
+.part:nth-child(2){top:60%;left:85%;width:3px;height:3px;animation:fi 3s ease-out 2s forwards,float2 10s ease-in-out 4s infinite}
+.part:nth-child(3){top:30%;right:20%;width:6px;height:6px;animation:fi 3s ease-out 1.5s forwards,float3 7s ease-in-out 3.5s infinite}
+.part:nth-child(4){bottom:40%;left:15%;width:2px;height:2px;animation:fi 3s ease-out 2.5s forwards,float1 9s ease-in-out 4.5s infinite}
+.part:nth-child(5){top:70%;right:10%;width:5px;height:5px;animation:fi 3s ease-out .8s forwards,float2 11s ease-in-out 3s infinite}
+@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px) translateX(10px)}}
+@keyframes float3{0%,100%{transform:translateY(0)}50%{transform:translateY(-25px) translateX(-8px)}}
+
+/* ─── FEATURES ─── */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:var(--space-xl)}
+.feat-card{background:var(--ds-gradient-card);background:linear-gradient(145deg,var(--blk-m),var(--g9));border:1px solid var(--g9);border-radius:var(--r-lg);padding:2rem;transition:all var(--t);position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gd),transparent);opacity:0;transition:opacity var(--t)}
+.feat-card:hover{transform:translateY(-4px);border-color:rgba(212,168,83,.2)}
+.feat-card:hover::before{opacity:1}
+.feat-icon{width:48px;height:48px;border-radius:var(--r-md);background:var(--gg);border:1px solid rgba(212,168,83,.15);display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:var(--space-md);color:var(--gd)}
+.feat-card h3{font-family:var(--f-body);font-size:1.125rem;font-weight:600;margin-bottom:.5rem}
+.feat-card p{font-size:.9375rem;color:var(--g4);line-height:1.7}
+
+/* ─── SHOWCASE ─── */
+.showcase-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:var(--space-xl)}
+@media(max-width:768px){.showcase-grid{grid-template-columns:1fr}}
+.showcase-item{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--g9);border:1px solid var(--g9);aspect-ratio:16/10;cursor:pointer;transition:all var(--t)}
+.showcase-item:hover{transform:scale(1.02);border-color:rgba(212,168,83,.2)}
+.showcase-item img{width:100%;height:100%;object-fit:cover;opacity:.8;transition:opacity var(--t)}
+.showcase-item:hover img{opacity:1}
+.showcase-overlay{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.showcase-overlay h3{font-family:var(--f-body);font-size:1rem;font-weight:500;margin-bottom:.25rem}
+.showcase-overlay p{font-size:.8125rem;color:var(--g4)}
+
+/* ─── PRICING ─── */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:var(--space-xl);align-items:start}
+.price-card{background:var(--g9);border:1px solid var(--g8);border-radius:var(--r-lg);padding:2.5rem 2rem;transition:all var(--t);position:relative}
+.price-card.featured{background:linear-gradient(145deg,var(--blk-m),var(--g9));border-color:rgba(212,168,83,.3);transform:scale(1.05)}
+@media(max-width:768px){.price-card.featured{transform:none}}
+.price-card.featured::before{content:'Best Value';position:absolute;top:-1px;left:50%;transform:translateX(-50%);padding:.25rem 1rem;background:var(--gd);color:var(--blk);font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:0 0 var(--r-sm) var(--r-sm)}
+.price-card:hover{transform:translateY(-4px);border-color:rgba(212,168,83,.2)}
+.price-card.featured:hover{transform:scale(1.05) translateY(-4px)}
+@media(max-width:768px){.price-card.featured:hover{transform:none}}
+.price-name{font-family:var(--f-body);font-size:.8125rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--g4);margin-bottom:var(--space-sm)}
+.price-amount{font-size:3rem;color:var(--wh);margin-bottom:.25rem}
+.price-amount span{font-size:1.125rem;color:var(--g4)}
+.price-desc{font-size:.9375rem;color:var(--g4);margin-bottom:var(--space-lg);line-height:1.7}
+.price-features{list-style:none;margin-bottom:var(--space-lg)}
+.price-features li{padding:.5rem 0;font-size:.9375rem;color:var(--g3);display:flex;align-items:center;gap:.75rem}
+.price-features li::before{content:'→';color:var(--gd);font-weight:600}
+
+/* ─── TESTIMONIALS ─── */
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;margin-top:var(--space-xl)}
+.test-card{background:var(--g9);border:1px solid var(--g8);border-radius:var(--r-lg);padding:2rem;transition:all var(--t)}
+.test-card:hover{transform:translateY(-3px);border-color:rgba(212,168,83,.15)}
+.test-stars{color:var(--gd);font-size:.875rem;margin-bottom:var(--space-sm)}
+.test-card blockquote{font-size:.9375rem;color:var(--g3);line-height:1.7;margin-bottom:var(--space-md);font-style:italic}
+.test-author{display:flex;align-items:center;gap:.75rem}
+.test-avatar{width:40px;height:40px;border-radius:50%;background:var(--gg);border:1px solid rgba(212,168,83,.2);display:flex;align-items:center;justify-content:center;font-family:var(--f-dis);color:var(--gd);font-size:.875rem;font-style:italic}
+.test-info h4{font-family:var(--f-body);font-size:.9375rem;font-weight:500}
+.test-info p{font-size:.8125rem;color:var(--g5)}
+
+/* ─── CTA ─── */
+.cta-section{text-align:center;padding:var(--space-3xl) 0;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(212,168,83,.08) 0%,transparent 70%);pointer-events:none}
+.cta-content{position:relative;z-index:2;max-width:650px;margin:0 auto}
+.cta-content h2{font-size:clamp(2rem,4vw,3.5rem);margin-bottom:var(--space-sm)}
+.cta-content p{font-size:1.125rem;color:var(--g4);margin-bottom:var(--space-lg);line-height:1.7}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ─── FAQ ─── */
+.faq-list{max-width:720px;margin:var(--space-xl) auto 0}
+.faq-item{border-bottom:1px solid var(--g9);padding:1.25rem 0}
+.faq-q{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:var(--f-body);font-size:1.0625rem;font-weight:500;color:var(--g1);transition:color var(--t);background:none;border:none;width:100%;text-align:left;padding:.5rem 0}
+.faq-q:hover{color:var(--gd)}
+.faq-q .icon{font-size:.875rem;color:var(--gd);transition:transform var(--t)}
+.faq-q.open .icon{transform:rotate(45deg)}
+.faq-a{padding:0 0 1rem;font-size:.9375rem;color:var(--g4);line-height:1.7;display:none}
+.faq-a.open{display:block}
+
+/* ─── STATS ─── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:var(--space-xl)}
+@media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-item{text-align:center;padding:2rem;border:1px solid var(--g9);border-radius:var(--r-lg);background:var(--blk-m)}
+.stat-num{font-family:var(--f-dis);font-size:3rem;color:var(--wh);line-height:1}
+.stat-num span{color:var(--gd)}
+.stat-label{font-size:.875rem;color:var(--g4);margin-top:.75rem;text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+
+/* ─── FOOTER ─── */
+.footer{border-top:1px solid var(--g9);padding:var(--space-xl) 0 var(--space-lg)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:var(--space-xl)}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr}}
+.footer-brand .nav-logo{margin-bottom:var(--space-sm)}
+.footer-brand p{font-size:.875rem;color:var(--g5);max-width:300px;line-height:1.7}
+.footer-col h4{font-family:var(--f-body);font-size:.8125rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--g3);margin-bottom:var(--space-md)}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.5rem}
+.footer-col a{font-size:.875rem;color:var(--g5);transition:color var(--t)}
+.footer-col a:hover{color:var(--gd)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:var(--space-lg);border-top:1px solid var(--g9);font-size:.8125rem;color:var(--g5)}
+.footer-social{display:flex;gap:1rem}
+.footer-social a{width:36px;height:36px;border-radius:50%;border:1px solid var(--g8);display:flex;align-items:center;justify-content:center;color:var(--g4);font-size:.875rem;transition:all var(--t)}
+.footer-social a:hover{border-color:var(--gd);color:var(--gd);background:var(--gg)}
+
+/* ─── SECTION DIVIDER ─── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--g9),transparent);max-width:800px;margin:0 auto}
+
+/* ─── LOADING SCREEN ─── */
+.loader{position:fixed;inset:0;z-index:9999;background:var(--blk);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;transition:opacity .6s ease-out}
+.loader.hidden{opacity:0;pointer-events:none}
+.loader-ring{width:48px;height:48px;border:1px solid var(--g8);border-top-color:var(--gd);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader p{font-size:.8125rem;color:var(--g5);letter-spacing:.1em;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-ring"></div>
+  <p>Cargando</p>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Dev<span>Snap</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#components">Components</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact" class="btn btn-p nav-cta">Get Started</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-particles">
+    <div class="part"></div><div class="part"></div><div class="part"></div>
+    <div class="part"></div><div class="part"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-badge afu"><span class="hero-badge-dot"></span> Premium UI Components</div>
+    <h1 class="afu s1">Beautiful components.<br><em>Zero compromises.</em></h1>
+    <p class="afu s2">10 production-ready UI components crafted with obsessive attention to detail. Dark mode, responsive, and effortlessly customizable.</p>
+    <div class="hero-actions afu s3">
+      <a href="#components" class="btn btn-p">View Components →</a>
+      <a href="#pricing" class="btn btn-o">See Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="components">
+  <div class="container">
+    <div class="section-label afi">What's Inside</div>
+    <h2 class="section-title afi s1">Every component,<br>meticulously crafted.</h2>
+    <p class="section-sub afi s2">From hero sections to footers — each piece is designed to work in isolation or as part of a cohesive whole.</p>
+    <div class="features-grid">
+      <div class="feat-card afi s3"><div class="feat-icon">◈</div><h3>Hero Sections</h3><p>Bold, typography-driven hero layouts with particle effects and gradient overlays.</p></div>
+      <div class="feat-card afi s3"><div class="feat-icon">◈</div><h3>Navigation Bars</h3><p>Glassmorphism nav with smooth scroll, mobile toggle, and animated indicators.</p></div>
+      <div class="feat-card afi s4"><div class="feat-icon">◈</div><h3>Feature Grids</h3><p>Responsive card grids with hover effects, subtle borders, and icon supports.</p></div>
+      <div class="feat-card afi s4"><div class="feat-icon">◈</div><h3>Pricing Tables</h3><p>Three-tier pricing with featured highlight, hover scale, and feature lists.</p></div>
+      <div class="feat-card afi s5"><div class="feat-icon">◈</div><h3>Testimonials</h3><p>Social-proof cards with star ratings, blockquotes, and author avatars.</p></div>
+      <div class="feat-card afi s5"><div class="feat-icon">◈</div><h3>FAQ Accordions</h3><p>Accessible accordion with smooth open/close and animated toggle icons.</p></div>
+      <div class="feat-card afi s6"><div class="feat-icon">◈</div><h3>Stats Counters</h3><p>Animated number counters with elegant typography and bordered containers.</p></div>
+      <div class="feat-card afi s6"><div class="feat-icon">◈</div><h3>CTA Sections</h3><p>Conversion-focused call-to-action blocks with radial gradient backgrounds.</p></div>
+      <div class="feat-card afi s6"><div class="feat-icon">◈</div><h3>Contact Forms</h3><p>Styled form inputs with gold focus states, labels, and validation-ready markup.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATS -->
+<section class="section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item afi"><div class="stat-num"><span>10</span></div><div class="stat-label">Components</div></div>
+      <div class="stat-item afi s1"><div class="stat-num"><span>4.9</span>/5</div><div class="stat-label">Avg. Rating</div></div>
+      <div class="stat-item afi s2"><div class="stat-num"><span>100%</span></div><div class="stat-label">Responsive</div></div>
+      <div class="stat-item afi s3"><div class="stat-num"><span>∞</span></div><div class="stat-label">Customizable</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-label afi" style="text-align:center;width:100%">Investment</div>
+    <h2 class="section-title afi s1" style="text-align:center">Choose your plan.</h2>
+    <p class="section-sub afi s2" style="text-align:center;margin:0 auto">Start with a single component or grab the entire collection.</p>
+    <div class="pricing-grid">
+      <div class="price-card afi s3">
+        <div class="price-name">Single Component</div>
+        <div class="price-amount">$3 <span>USD</span></div>
+        <p class="price-desc">One premium component of your choice. Full source code included.</p>
+        <ul class="price-features">
+          <li>Your choice of component</li>
+          <li>HTML + CSS source</li>
+          <li>Responsive & dark mode</li>
+          <li>Basic documentation</li>
+        </ul>
+        <a href="#" class="btn btn-o" style="width:100%;justify-content:center">Coming Soon</a>
+      </div>
+      <div class="price-card featured afi s4">
+        <div class="price-name">Complete Collection</div>
+        <div class="price-amount">$9 <span>USD</span></div>
+        <p class="price-desc">All 10 components. The full DevSnap library with everything you need.</p>
+        <ul class="price-features">
+          <li>All 10 components</li>
+          <li>HTML + CSS source</li>
+          <li>Responsive & dark mode</li>
+          <li>Full documentation</li>
+          <li>Free updates</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#" class="btn btn-p" style="width:100%;justify-content:center">Buy Now — $9</a>
+      </div>
+      <div class="price-card afi s5">
+        <div class="price-name">Commercial License</div>
+        <div class="price-amount">$29 <span>USD</span></div>
+        <p class="price-desc">Full commercial rights. Use in unlimited client projects.</p>
+        <ul class="price-features">
+          <li>Everything in Complete</li>
+          <li>Unlimited client projects</li>
+          <li>Team access (up to 5)</li>
+          <li>Priority support</li>
+          <li>Component requests</li>
+          <li>Figma file included</li>
+        </ul>
+        <a href="#" class="btn btn-o" style="width:100%;justify-content:center">Coming Soon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="container">
+    <div class="section-label afi">Testimonials</div>
+    <h2 class="section-title afi s1">Loved by developers.</h2>
+    <p class="section-sub afi s2">Join hundreds of developers who trust DevSnap for their projects.</p>
+    <div class="test-grid">
+      <div class="test-card afi s3">
+        <div class="test-stars">★★★★★</div>
+        <blockquote>"The quality of these components blew me away. Every detail is considered — spacing, typography, hover states. Worth every penny."</blockquote>
+        <div class="test-author"><div class="test-avatar">AR</div><div class="test-info"><h4>Alex Rivera</h4><p>Frontend Lead, StudioX</p></div></div>
+      </div>
+      <div class="test-card afi s4">
+        <div class="test-stars">★★★★★</div>
+        <blockquote>"I used the Hero component for my startup landing page. Took me 10 minutes to customize. It just works and looks incredible."</blockquote>
+        <div class="test-author"><div class="test-avatar">MK</div><div class="test-info"><h4>Maya Krishnan</h4><p>Indie Hacker</p></div></div>
+      </div>
+      <div class="test-card afi s5">
+        <div class="test-stars">★★★★★</div>
+        <blockquote>"Finally, a component library that doesn't look like Bootstrap or Tailwind UI. DevSnap has a real personality. Refreshing."</blockquote>
+        <div class="test-author"><div class="test-avatar">JD</div><div class="test-info"><h4>James Delacroix</h4><p>Design Engineer</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-label afi" style="text-align:center;width:100%">FAQ</div>
+    <h2 class="section-title afi s1" style="text-align:center">Frequently asked.</h2>
+    <div class="faq-list">
+      <div class="faq-item afi s2">
+        <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">What exactly do I get? <span class="icon">+</span></button>
+        <div class="faq-a">You receive a ZIP file containing individual HTML and CSS files for each component, plus a comprehensive demo page showing them all integrated together. Everything is well-commented and easy to customize.</div>
+      </div>
+      <div class="faq-item afi s3">
+        <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Can I use these in commercial projects? <span class="icon">+</span></button>
+        <div class="faq-a">Yes. The Standard license allows use in personal and commercial projects (up to 5 end-products). The Commercial License removes all limits for agencies and freelancers working on multiple client projects.</div>
+      </div>
+      <div class="faq-item afi s4">
+        <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Do I need a framework like React or Vue? <span class="icon">+</span></button>
+        <div class="faq-a">Not at all. DevSnap components are built with pure HTML and CSS. They work in any stack — React, Vue, Astro, WordPress, or plain static sites. Zero framework lock-in.</div>
+      </div>
+      <div class="faq-item afi s5">
+        <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Are updates included? <span class="icon">+</span></button>
+        <div class="faq-a">Yes. All license tiers include free updates for 12 months. When new components are added to DevSnap, you'll get them automatically at no extra cost.</div>
+      </div>
+      <div class="faq-item afi s6">
+        <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">What if I'm not satisfied? <span class="icon">+</span></button>
+        <div class="faq-a">We offer a 14-day money-back guarantee. If DevSnap doesn't meet your expectations, we'll refund your purchase — no questions asked.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-bg"></div>
+  <div class="container cta-content">
+    <h2 class="afi">Ready to build something beautiful?</h2>
+    <p class="afi s1">Get the complete DevSnap collection and ship stunning interfaces faster than ever.</p>
+    <div class="cta-actions afi s2">
+      <a href="#pricing" class="btn btn-p">Get DevSnap →</a>
+      <a href="#" class="btn btn-o">View Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">Dev<span>Snap</span></div>
+        <p>Premium UI components for developers who care about quality. Crafted with obsessive attention to every detail.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#components">Components</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">License</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 DevSnap. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="#" aria-label="GitHub">⌘</a>
+        <a href="#" aria-label="X">𝕏</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Loader
+window.addEventListener('load', () => {
+  document.getElementById('loader').classList.add('hidden');
+});
+
+// Mobile nav toggle
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.afu, .afi').forEach(el => {
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

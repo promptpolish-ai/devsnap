@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Navbar — DevSnap</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0b;font-family:'Outfit',sans-serif;padding-top:80px;min-height:100vh}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 0;background:rgba(10,10,11,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.logo{font-family:'Playfair Display',Georgia,serif;font-size:1.25rem;color:#f5f5f7;font-style:italic}
+.logo span{color:#d4a853}
+.links{display:flex;align-items:center;gap:2rem;list-style:none}
+.links a{font-size:.875rem;color:#a8a8b0;text-decoration:none;transition:color .3s;position:relative}
+.links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#d4a853;transition:width .3s}
+.links a:hover{color:#f5f5f7}
+.links a:hover::after{width:100%}
+.cta{padding:.5rem 1.25rem;border-radius:6px;background:linear-gradient(135deg,#d4a853,#e4c07a);color:#0a0a0b;text-decoration:none;font-size:.8125rem;font-weight:500;transition:all .3s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(212,168,83,.15);color:#0a0a0b}
+.toggle{display:none;background:none;border:none;color:#f5f5f7;font-size:1.5rem;cursor:pointer}
+@media(max-width:768px){
+  .links{display:none;position:absolute;top:100%;left:0;right:0;background:#121214;flex-direction:column;padding:1.5rem;gap:1rem;border-bottom:1px solid #1f1f23}
+  .links.open{display:flex}
+  .toggle{display:block}
+}
+.content{padding:4rem 1.5rem;color:#8a8a92;max-width:600px;margin:0 auto;text-align:center;line-height:1.7}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <div class="logo">Dev<span>Snap</span></div>
+  <ul class="links" id="links">
+    <li><a href="#">Components</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#">FAQ</a></li>
+    <li><a href="#" class="cta">Get Started</a></li>
+  </ul>
+  <button class="toggle" id="toggle" aria-label="Menu">☰</button>
+</div></nav>
+<div class="content"><h2 style="font-family:'Playfair Display';color:#f5f5f7;margin-bottom:1rem;font-weight:400">Glassmorphism Nav</h2><p>Resize to see responsive mobile toggle. Clean, animated link indicators with gold hover effect.</p></div>
+<script>
+document.getElementById('toggle').addEventListener('click',()=>{document.getElementById('links').classList.toggle('open')});
+</script>
+</body>
+</html>
