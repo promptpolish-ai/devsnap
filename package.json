@@ -1,0 +1,29 @@
+{
+  "name": "@promptpolish-ai/devsnap",
+  "version": "1.0.0",
+  "description": "10 premium dark-mode HTML/CSS UI components for modern landing pages",
+  "main": "css/devsnap.css",
+  "style": "css/devsnap.css",
+  "files": [
+    "css/",
+    "components/",
+    "assets/"
+  ],
+  "keywords": [
+    "ui-components",
+    "landing-page",
+    "css",
+    "html",
+    "dark-mode",
+    "glassmorphism",
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/promptpolish-ai/devsnap.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md"
+}
