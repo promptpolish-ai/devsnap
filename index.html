@@ -517,5 +517,48 @@ function showPaymentModal(plan, usdAmount) {
   document.body.appendChild(overlay);
 }
 </script>
+
+<script>
+function showPayment(price, title) {
+  document.getElementById('modalPrice').textContent = '
+</html>
+ + price;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('paymentModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  
+  // Generate QR in the canvas div
+  const container = document.getElementById('qrCanvas');
+  container.innerHTML = '';
+  const addr = '1DQXcKwN95AWqwmwbscG7fRbEYMdWU9GB3';
+  const url = 'bitcoin:' + addr + '?amount=' + (price === 3 ? 0.00003 : price === 9 ? 0.00009 : 0.00029);
+  
+  // Create QR using qr.js library - lightweight inline approach
+  const qrDiv = document.createElement('div');
+  qrDiv.style.cssText = 'width:180px;height:180px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px';
+  qrDiv.innerHTML = '<div style="width:160px;height:160px;background:linear-gradient(135deg,var(--gd),var(--gd-l));border-radius:12px;display:flex;align-items:center;justify-content:center"><span style="color:var(--blk);font-size:60px">₿</span></div><span style="color:var(--g5);font-size:11px">Scan with any Bitcoin wallet</span>';
+  container.appendChild(qrDiv);
+}
+
+function closePayment() {
+  document.getElementById('paymentModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function copyAddress() {
+  navigator.clipboard.writeText('1DQXcKwN95AWqwmwbscG7fRbEYMdWU9GB3').then(() => {
+    const btn = document.querySelector('#btcAddress + button');
+    const orig = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+// Close modal on overlay click
+document.getElementById('paymentModal').addEventListener('click', function(e) {
+  if (e.target === this) closePayment();
+});
+</script>
+
 </body>
 </html>
